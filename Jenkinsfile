@@ -1,4 +1,3 @@
-// some comments
 pipeline {
   agent {
     label 'jdk8'
@@ -14,13 +13,15 @@ pipeline {
     }
     stage('Deploy') {
       options {
-        timeout(time: 30, unit: 'SECONDS') 
+        timeout(time: 30, unit: 'SECONDS')
       }
       input {
-        message "Which Version?"
-        ok "Deploy"
+        message 'Which Version?'
+        id 'Deploy'
         parameters {
-            choice(name: 'APP_VERSION', choices: "v1.1\nv1.2\nv1.3", description: 'What to deploy?')
+          choice(name: 'APP_VERSION', choices: '''v1.1
+v1.2
+v1.3''', description: 'What to deploy?')
         }
       }
       steps {
@@ -31,6 +32,13 @@ pipeline {
   environment {
     MY_NAME = 'Kyle'
     TEST_USER = credentials('test-user')
+  }
+  post {
+    aborted {
+      echo 'Why didn\'t you push my button?'
+
+    }
+
   }
   parameters {
     string(name: 'Name', defaultValue: 'whoever you are', description: 'Who should I say hi to?')
