@@ -50,6 +50,11 @@ pipeline {
 
     }
 
+    always {
+      echo "My build number is ${env.BUILD_NUMBER}"
+
+    }
+
   }
   parameters {
     string(name: 'Name', defaultValue: 'whoever you are', description: 'Who should I say hi to?')
